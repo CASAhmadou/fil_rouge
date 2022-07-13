@@ -14,6 +14,7 @@ class CommandeVoter extends Voter
 {
     public const EDIT = 'COMMANDE_EDIT';
     public const CREATE = 'COMMANDE_CREATE';
+    public const READ = 'COMMANDE_READ';
     private $security = null;
 
     public function __construct(Security $security)
@@ -27,7 +28,7 @@ class CommandeVoter extends Voter
         //dd(in_array($attribute, ['COMMANDE_EDIT', 'COMMANDE_CREATE']));
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::CREATE, self::EDIT])
+        return in_array($attribute, [self::CREATE, self::EDIT, self::READ])
             && $commande instanceof Commande;
     }
 
@@ -53,6 +54,8 @@ class CommandeVoter extends Voter
                 if ( $this->security->isGranted(Role::CLIENT) ) { return true; } 
                 // logic to determine if the user can VIEW
                 // return true or false
+                break;
+            case self::CREATE:
                 break;
         }
 
