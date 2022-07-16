@@ -49,10 +49,10 @@ class TailleBoisson
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["boisson:write","boisson:read:all","taille:read:all","taille:write"])]
+    #[Groups(["boisson:write","boisson:read:all","taille:read:all","taille:write","write:menu"])]
     private $id;
 
-    #[ORM\Column(type: 'float')]
+    #[ORM\Column(type: 'integer')]
     #[Groups(["taille:read:simple","taille:read:all","taille:write","boisson:read:all"])]
     private $prix;
 
@@ -85,12 +85,12 @@ class TailleBoisson
         return $this->id;
     }
 
-    public function getPrix(): ?float
+    public function getPrix(): ?int
     {
         return $this->prix;
     }
 
-    public function setPrix(float $prix): self
+    public function setPrix(int $prix): self
     {
         $this->prix = $prix;
 
