@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -28,9 +29,9 @@ use Symfony\Component\Validator\Constraints\Cascade;
             'normalization_context' => ['groups' => ['commande:read:all']],
         ]],
     itemOperations: [
-        "get" => [ "security" => "is_granted('COMPLEMENT_READ', commande)" ],
-        "put" => [ "security" => "is_granted('COMPLEMENT_EDIT', commande)" ],
-        "delete" => [ "security" => "is_granted('COMPLEMENT_DELETE', commande)" ],
+        "get" => [ "security" => "is_granted('COMMENDE_READ', commande)" ],
+        "put" => [ "security" => "is_granted('COMMANDE_EDIT', commande)" ],
+        "delete" => [ "security" => "is_granted('COMMANDE_DELETE', commande)" ],
     ],
  )]
 class Commande
@@ -105,6 +106,7 @@ class Commande
         $this->commandeBurgers = new ArrayCollection();
         $this->commandeBoissons = new ArrayCollection();
         $this->commandeFrites = new ArrayCollection();
+        $this->dateCommande = new \DateTime();
     }
 
     public function getId(): ?int

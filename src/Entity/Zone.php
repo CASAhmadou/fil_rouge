@@ -49,22 +49,22 @@ class Zone
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write","zone:read:simple"])]
+    #[Groups(["write","zone:read:simple","zone:read:all"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["write","zone:read:simple"])]
+    #[Groups(["write","zone:read:simple","zone:read:all"])]
     private $libelle;
 
     #[ORM\Column(type: 'float')]
-    #[Groups(["write","zone:read:simple"])]
+    #[Groups(["write","zone:read:simple","zone:read:all"])]
     private $prix;
 
     #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Commande::class)]
     private $commandes;
 
-    #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Quartier::class)]
-    #[Groups(["write","zone:read:simple"])]
+    #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Quartier::class, cascade:['persist'])]
+    #[Groups(["write","zone:read:simple","zone:read:all"])]
     private $quartiers;
 
     public function __construct()
