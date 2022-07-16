@@ -61,8 +61,12 @@ class Menu extends Produit
     private $gestionnaire;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuBurger::class, cascade:['persist'])]
+
     #[Groups(["write:menu", "menu:read:simple","menu:read:all"])]
     //#[Assert\Positive] //contraint obligatoire positif
+
+    #[Groups(["write", "burger:read:simple"])]
+    #[Assert\Positive] //contraint obligatoire positif
     #[Assert\Count(
             min : 1,
             minMessage : "Il faut au moins un produit"
