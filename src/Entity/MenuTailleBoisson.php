@@ -14,18 +14,18 @@ class MenuTailleBoisson
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write"])]
+    #[Groups(["menu:read:simple","menu:read:all"])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'menuTailleBoissons')]
     private $menu;
 
     #[ORM\ManyToOne(targetEntity: TailleBoisson::class, inversedBy: 'menuTailleBoissons')]
-    #[Groups(["write"])]
+    #[Groups(["write:menu","menu:read:simple","menu:read:all"])]
     private $tailleboisson;
 
-    #[ORM\Column(type: 'float')]
-    #[Groups(["write"])]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(["write:menu","menu:read:simple","menu:read:all"])]
     private $quantity;
 
     public function getId(): ?int
@@ -57,12 +57,12 @@ class MenuTailleBoisson
         return $this;
     }
 
-    public function getQuantity(): ?float
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(float $quantity): self
+    public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
 

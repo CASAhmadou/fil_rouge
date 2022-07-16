@@ -18,13 +18,13 @@ use Symfony\Component\Validator\Constraints\Cascade;
         "get"=>[
         'method' => 'get',
         'status' => Response::HTTP_OK,
-        'normalization_context' => ['groups' => ['burger:read:simple']],
+        'normalization_context' => ['groups' => ['menu:read:simple']],
         ]
         ,"post"=>[
             "security"=>"is_granted('ROLE_GESTIONNAIRE')",
             "security_message"=>"Vous n'avez pas access à cette Ressource",
-            'denormalization_context' => ['groups' => ['write']],
-            'normalization_context' => ['groups' => ['burger:read:all']],
+            'denormalization_context' => ['groups' => ['write:menu']],
+            'normalization_context' => ['groups' => ['menu:read:all']],
             'input_formats' => [
                 'multipart' => ['multipart/form-data'],
             ]
@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints\Cascade;
     "get"=>[
         'method' => 'get',
         'status' => Response::HTTP_OK,
-        'normalization_context' => ['groups' => ['burger:read:all']],
+        'normalization_context' => ['groups' => ['menu:read:all']],
         'input_formats' => [
             'multipart' => ['multipart/form-data'],
             ]
@@ -61,7 +61,7 @@ class Menu extends Produit
     private $gestionnaire;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuBurger::class, cascade:['persist'])]
-    #[Groups(["write", "burger:read:simple"])]
+    #[Groups(["write:menu", "menu:read:simple","menu:read:all"])]
     //#[Assert\Positive] //contraint obligatoire positif
     #[Assert\Count(
             min : 1,
@@ -70,11 +70,11 @@ class Menu extends Produit
     private $menuBurgers;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuPortionFrite::class, cascade:['persist'])]
-    #[Groups(["write", "burger:read:simple"])]
+    #[Groups(["write:menu", "menu:read:simple","menu:read:all"])]
     private $menuPortionFrites;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuTailleBoisson::class, cascade:['persist'])]
-    #[Groups(["write","burger:read:simple"])]
+    #[Groups(["write:menu","menu:read:simple","menu:read:all"])]
     //#[Assert\NotBlank] 
     private $menuTailleBoissons;
 

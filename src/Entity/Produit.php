@@ -25,16 +25,16 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","commande:write","menu:write","taille:write","boisson:write","boisson:read:simple","boisson:read:all","taille:read:all"])]
+    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","commande:write","taille:write","boisson:write","boisson:read:simple","boisson:read:all","taille:read:all","write:menu"])]
     protected $id;
 
     #[ORM\Column(type: 'string', length: 255)]
    // #[Assert\NotBlank(message:'le nom du burger est obligatoire')]
-    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple","boisson:read:all","boisson:read:all"])]
+    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple","boisson:read:all","boisson:read:all","write:menu"])]
     protected $nom;
 
     #[ORM\Column(type: 'blob', nullable:true)]
-    #[Groups(["write","burger:read:simple","burger:read:all","menu:write","boisson:read:simple","boisson:read:all"])]
+    #[Groups(["burger:read:simple","burger:read:all","boisson:read:simple","boisson:read:all"])]
     //#[Assert\NotBlank(message:'le burger doit avoir une image')]
     protected $image;
 
@@ -55,7 +55,7 @@ class Produit
     /**
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
      */
-    #[Groups(['write'])]
+    #[Groups(["write","write:menu"])]
     #[SerializedName("image")]
     public ?file $file=null;
 

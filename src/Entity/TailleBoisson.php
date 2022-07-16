@@ -49,7 +49,7 @@ class TailleBoisson
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["boisson:write","boisson:read:all","taille:read:all","taille:write"])]
+    #[Groups(["boisson:write","boisson:read:all","taille:read:all","taille:write","write","write:menu"])]
     private $id;
 
     #[ORM\Column(type: 'float')]
