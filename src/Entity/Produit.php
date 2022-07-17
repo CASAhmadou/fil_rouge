@@ -2,17 +2,18 @@
 
 namespace App\Entity;
 
+use ValidationPrix;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 #[UniqueEntity(fields:'nom',message:'le nom doit etre unique')]
@@ -20,6 +21,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\DiscriminatorColumn(name: "discr", type: "string")]
 #[ORM\DiscriminatorMap(["produit" => "Produit", "boisson" => "Boisson", "portionFrite" => "PortionFrite", "menu" => "Menu", "burger" =>"Burger" ])]
 #[ApiResource]
+
+#[Assert\Callback([ValidationPrix::class, 'validePrix'])]
 class Produit
 {
     #[ORM\Id]
@@ -57,6 +60,11 @@ class Produit
      */
     #[Groups(['write',"write:menu","menu:read:all","menu:read:simple"])]
     #[Assert\NotBlank(message:'le burger doit avoir une image')]
+    // #[Assert\File(
+    //     maxSize: '14k',
+    //     mimeTypes: ['application/pdf', 'application/x-pdf'],
+    //     mimeTypesMessage: 'Please upload a valid PDF',
+    // )]
     #[SerializedName("image")]
     public ?File $file=null;
 

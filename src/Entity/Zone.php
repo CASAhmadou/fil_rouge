@@ -19,6 +19,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'normalization_context' => ['groups' => ['zone:read:simple']],
         ]
     ,"post"=>[
+            "controller"=>ZoneController::class,
+            "method" => "post",
+            "path" => "/api/zones",
             'denormalization_context' => ['groups' => ['write']],
             'normalization_context' => ['groups' => ['zone:read:all']],
             "security"=>"is_granted('ROLE_GESTIONNAIRE')",
