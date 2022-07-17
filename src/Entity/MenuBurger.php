@@ -24,7 +24,7 @@ class MenuBurger
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Burger::class, inversedBy: 'menuBurgers')]
-    #[Groups(["write:menu"])]
+    #[Groups(["write:menu","menu:read:all","menu:read:simple"])]
     #[Assert\NotBlank(message:'Obligatoire un burger')]
     private $burger;
 
@@ -32,7 +32,7 @@ class MenuBurger
     private $menu;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(["write:menu"])]
+    #[Groups(["write:menu","menu:read:all","menu:read:simple"])]
     #[Assert\Positive(message:"La quantité doit etre superieur à zero")]
     private $quantity;
 

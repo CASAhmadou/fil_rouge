@@ -29,17 +29,17 @@ class Produit
     protected $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-   // #[Assert\NotBlank(message:'le nom du burger est obligatoire')]
+    #[Assert\NotBlank(message:'le nom du burger est obligatoire')]
     #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple","boisson:read:all","boisson:read:all","write:menu"])]
     protected $nom;
 
     #[ORM\Column(type: 'blob', nullable:true)]
     // #[Groups(["write","burger:read:simple","burger:read:all","menu:write","boisson:read:simple","boisson:read:all","write:menu"])]
-    //#[Assert\NotBlank(message:'le burger doit avoir une image')]
     protected $image;
 
     #[ORM\Column(type: 'integer', nullable:true)]
-    //#[Assert\NotBlank(message:'le prix est obligatoire')]
+    #[Assert\NotBlank(message:'le prix est obligatoire')]
+    // #[Assert\Positive]
     #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","write:menu"])]  
     protected $prix;
 
@@ -55,14 +55,12 @@ class Produit
     /**
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
      */
-    #[Groups(['write',"write:menu"])]
+    #[Groups(['write',"write:menu","menu:read:all","menu:read:simple"])]
+    #[Assert\NotBlank(message:'le burger doit avoir une image')]
     #[SerializedName("image")]
-    public ?file $file=null;
+    public ?File $file=null;
 
-   // #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $type;
-
-    #[ORM\Column(type: 'float', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $stock;
 
     public function __construct()
@@ -89,8 +87,13 @@ class Produit
 
     public function getImage()
     {
-        return utf8_encode(base64_encode($this->image));
-        //return base64_encode(stream_get_contents($this->image));
+        if(is_resource($this->image)){
+            return base64_encode(stream_get_contents($this->image));
+        }elseif($this->image){
+            return base64_encode(($this->image));
+        }
+        // return utf8_encode(($this->image));
+        return null;
     }
 
     public function setImage(string $image): self
@@ -100,12 +103,12 @@ class Produit
         return $this;
     }
 
-    public function getPrix(): ?float
+    public function getPrix(): ?int
     {
         return $this->prix;
     }
 
-    public function setPrix(float $prix): self
+    public function setPrix(int $prix): self
     {
         $this->prix = $prix;
 
@@ -180,41 +183,18 @@ class Produit
         return $this;
     }
 
-    public function getQuantity(): ?float
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(float $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getStock(): ?float
+    public function getStock(): ?int
     {
         return $this->stock;
     }
 
-    public function setStock(float $stock): self
+    public function setStock(int $stock): self
     {
         $this->stock = $stock;
 
         return $this;
     }
+
 
     /**
      * Get the value of file

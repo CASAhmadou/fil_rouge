@@ -54,7 +54,7 @@ class BoissonTaille
     #[Groups(["boisson:write","boisson:read:all"])]
     private $boisson;
 
-    #[ORM\Column(type: 'float')]
+    #[ORM\Column(type: 'integer')]
     #[Groups(["boisson:write","boisson:read:all"])]
     private $qte;
 

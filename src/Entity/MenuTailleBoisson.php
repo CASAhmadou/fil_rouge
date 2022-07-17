@@ -21,11 +21,11 @@ class MenuTailleBoisson
     private $menu;
 
     #[ORM\ManyToOne(targetEntity: TailleBoisson::class, inversedBy: 'menuTailleBoissons')]
-    #[Groups(["write:menu"])]
+    #[Groups(["write:menu","menu:read:all","menu:read:simple"])]
     private $tailleboisson;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:menu"])]
+    #[Groups(["write:menu","menu:read:all","menu:read:simple"])]
     private $quantity;
 
     public function getId(): ?int

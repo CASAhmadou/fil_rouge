@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\ValidationMenu;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MenuRepository;
 use Doctrine\Common\Collections\Collection;
@@ -50,6 +51,8 @@ use Symfony\Component\Validator\Constraints\Cascade;
     attributes: ["pagination_items_per_page" => 5],
   
 )]
+#[Assert\Callback([ValidationMenu::class, 'ValideMenu'])]
+#[Assert\Callback([ValidationMenu::class, 'TestMenu'])]
 class Menu extends Produit
 {
     //#[ORM\ManyToOne(targetEntity: Catalogue::class, inversedBy: 'menus')]
@@ -57,12 +60,12 @@ class Menu extends Produit
     private $catalogue;
 
     #[ORM\ManyToOne(targetEntity: Gestionnaire::class, inversedBy: 'menus')]
-    #[Groups(["burger:read:simple"])]
+    #[Groups(["menu:read:simple"])]
     private $gestionnaire;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuBurger::class, cascade:['persist'])]
-    #[Groups(["write:menu", "menu:read:simple"])]
-    //#[Assert\Positive] //contraint obligatoire positif
+    #[Groups(["write:menu", "menu:read:simple","menu:read:all"])]
+    #[Assert\NotBlank]
     #[Assert\Count(
             min : 1,
             minMessage : "Il faut au moins un produit"
@@ -70,12 +73,13 @@ class Menu extends Produit
     private $menuBurgers;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuPortionFrite::class, cascade:['persist'])]
-    #[Groups(["write:menu", "menu:read:simple"])]
+    #[Groups(["write:menu", "menu:read:simple","menu:read:all"])]
+    #[Assert\NotBlank]
     private $menuPortionFrites;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuTailleBoisson::class, cascade:['persist'])]
-    #[Groups(["write:menu","menu:read:simple"])]
-    //#[Assert\NotBlank] 
+    #[Groups(["write:menu","menu:read:simple","menu:read:all"])]
+    #[Assert\NotBlank] 
     private $menuTailleBoissons;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: CommandeMenu::class)]

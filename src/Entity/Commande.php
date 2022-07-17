@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Service\ValidationCommande;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\Cascade;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 #[ApiResource(
@@ -33,6 +34,9 @@ use Symfony\Component\Validator\Constraints\Cascade;
         "delete" => [ "security" => "is_granted('COMPLEMENT_DELETE', commande)" ],
     ],
  )]
+
+ #[Assert\Callback([ValidationCommande::class, 'ValideCommande'])]
+#[Assert\Callback([ValidationCommande::class, 'TestCommande'])]
 class Commande
 {
     #[ORM\Id]
@@ -105,6 +109,7 @@ class Commande
         $this->commandeBurgers = new ArrayCollection();
         $this->commandeBoissons = new ArrayCollection();
         $this->commandeFrites = new ArrayCollection();
+        $this->dateCommande = new \DateTime('NOW');
     }
 
     public function getId(): ?int

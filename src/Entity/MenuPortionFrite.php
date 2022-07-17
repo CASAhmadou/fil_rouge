@@ -21,11 +21,11 @@ class MenuPortionFrite
     private $menu;
 
     #[ORM\ManyToOne(targetEntity: PortionFrite::class, inversedBy: 'menuPortionFrites')]
-    #[Groups(["write:menu"])]
+    #[Groups(["write:menu","menu:read:all","menu:read:simple"])]
     private $portionFrite;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:menu"])]
+    #[Groups(["write:menu","menu:read:all","menu:read:simple"])]
     private $quantity;
 
     public function getId(): ?int
