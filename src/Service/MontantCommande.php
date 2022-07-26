@@ -29,7 +29,7 @@ class  MontantCommande
         }
 
         foreach($frites as $frite ){
-            dd($frite);
+           // dd($frite);
             $frite->setPrix($frite->getFrite()->getPrix() * $frite->getQuantity());
             $montant += $frite->getFrite()->getPrix() * $frite->getQuantity();
         }
