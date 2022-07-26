@@ -19,7 +19,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        //$user=new User();
         $user=new Client();
         $user->setLogin('client@gmail.com');
         $user->setNom('Kasse');
@@ -32,7 +31,7 @@ class AppFixtures extends Fixture
         );
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_CLIENT']);
-        //$user1=new User();
+
         $user1=new Gestionnaire();
         $user1->setLogin('gestionnaire@gmail.com');
         $user1->setNom('Sakho');
