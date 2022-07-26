@@ -52,7 +52,6 @@ class Produit
 
     #[ORM\Column(type: 'text', nullable:true)]
     #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple","boisson:read:all","write:menu"])]
-    // #[Assert\NotBlank(message:'le burger doit avoir une description')]
     protected $description;
 
     /**
