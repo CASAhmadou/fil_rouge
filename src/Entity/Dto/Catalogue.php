@@ -1,16 +1,30 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Dto;
 
+use App\Entity\Menu;
+use App\Entity\Burger;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CatalogueRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-//#[ORM\Entity(repositoryClass: CatalogueRepository::class)]
-#[ApiResource(collectionOperations:["get","post"])]
+#[ApiResource(
+    collectionOperations:[
+        "get"=>[
+            'method' => 'get',
+            'path' => '/catalogues',
+            'status' => Response::HTTP_OK,
+            'normalization_context' => [
+                'groups' => ['catalogue:read']
+            ],
+        ]],
+        // attributes: ["pagination_items_per_page" => 5]
+
+)]
 
 class Catalogue
 {
@@ -20,8 +34,10 @@ class Catalogue
     private $id;
 
     //#[ORM\OneToMany(mappedBy: 'catalogue', targetEntity: Menu::class)]
+    #[Groups(["catalogue:read"])]
     private $menus;
 
+    #[Groups(["catalogue:read"])]
     private $burgers;
 
     public function __construct()

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Dto\Complement;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PortionFriteRepository;
 use Doctrine\Common\Collections\Collection;

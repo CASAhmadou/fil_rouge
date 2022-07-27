@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Dto;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ComplementRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\PortionFrite;
+use App\Entity\TailleBoisson;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ComplementRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 
 //#[ORM\Entity(repositoryClass: ComplementRepository::class)]
 #[ApiResource]

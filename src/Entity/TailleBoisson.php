@@ -10,6 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\Dto\Complement;
 
 #[ORM\Entity(repositoryClass: TailleBoissonRepository::class)]
 #[ApiResource(

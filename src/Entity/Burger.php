@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Menu;
 use App\Entity\Produit;
-use App\Entity\Catalogue;
 use App\Entity\Gestionnaire;
+use App\Entity\Dto\Catalogue;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BurgerRepository;
 use Doctrine\Common\Collections\Collection;
@@ -60,7 +60,6 @@ class Burger extends Produit
     private $catalogue;
 
     #[ORM\ManyToOne(targetEntity: Gestionnaire::class, inversedBy: 'burgers')]
-    
     private $gestionnaire;
 
     #[ORM\OneToMany(mappedBy: 'burger', targetEntity: MenuBurger::class, cascade:['persist'])]
