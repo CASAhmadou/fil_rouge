@@ -2,42 +2,37 @@
 
 namespace App\DataProviders;
 
-use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
-use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
-use App\Entity\Catalogue;
-use App\Repository\BurgerRepository;
+use App\Entity\Dto\Catalogue;
 use App\Repository\MenuRepository;
+use App\Repository\BurgerRepository;
+use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 
-class CatalogueDataProviders implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+final class CatalogueDataProviders implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
 {
-    private BurgerRepository $repo;
-    private MenuRepository $reposit;
 
-    public function __construct(BurgerRepository $repo,MenuRepository $reposit)
+    private $burger;
+    private $menu;
+
+    public function __construct(BurgerRepository $burger,MenuRepository $menu)
     {
-        $this->repo = $repo;
-        $this->reposit = $reposit;
+        $this->burger=$burger;
+        $this->menu=$menu;
+        
     }
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
         return Catalogue::class === $resourceClass;
     }
 
-    public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
+    public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
         $catalogue=[];
-        $burgers= $this->repo->findby(["etat"=>"DISPONIBLE"],['id'=>"desc"]);
-        $menus= $this->reposit->findby(["etat"=>"DISPONIBLE"],['id'=>"desc"]);
-        foreach ($burgers as  $burger)
-        {
-           $catalogue[]=$burger;
-        }
-
-        foreach ($menus as $menu) 
-        {
-            $catalogue[]=$menu;
-        }
-
+        $catalogue['menu']=$this->menu-> findAll();
+        $catalogue['burger']=$this->burger-> findAll();
+        // dd($this->burger-> findAll());
         return $catalogue;
     }
+
+
 }

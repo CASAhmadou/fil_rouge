@@ -69,11 +69,15 @@ class Burger extends Produit
     #[ORM\OneToMany(mappedBy: 'burger', targetEntity: CommandeBurger::class, cascade:['persist'])]
     private $commandeBurgers;
 
+    #[ORM\OneToMany(mappedBy: 'burger', targetEntity: DetailProduit::class)]
+    private Collection $detailProduits;
+
     public function __construct()
     {
         parent::__construct();
         $this->menuBurgers = new ArrayCollection();
         $this->commandeBurgers = new ArrayCollection();
+        $this->detailProduits = new ArrayCollection();
     }
 
    
@@ -169,6 +173,36 @@ class Burger extends Produit
             // set the owning side to null (unless already changed)
             if ($commandeBurger->getBurger() === $this) {
                 $commandeBurger->setBurger(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailProduit>
+     */
+    public function getDetailProduits(): Collection
+    {
+        return $this->detailProduits;
+    }
+
+    public function addDetailProduit(DetailProduit $detailProduit): self
+    {
+        if (!$this->detailProduits->contains($detailProduit)) {
+            $this->detailProduits->add($detailProduit);
+            $detailProduit->setBurger($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailProduit(DetailProduit $detailProduit): self
+    {
+        if ($this->detailProduits->removeElement($detailProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($detailProduit->getBurger() === $this) {
+                $detailProduit->setBurger(null);
             }
         }
 

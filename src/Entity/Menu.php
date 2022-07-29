@@ -86,6 +86,9 @@ class Menu extends Produit
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: CommandeMenu::class)]
     private $commandeMenus;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: DetailProduit::class)]
+    private Collection $detailProduits;
+
     public function __construct()
     {
         $this->complements = new ArrayCollection();
@@ -93,6 +96,7 @@ class Menu extends Produit
         $this->menuPortionFrites = new ArrayCollection();
         $this->menuTailleBoissons = new ArrayCollection();
         $this->commandeMenus = new ArrayCollection();
+        $this->detailProduits = new ArrayCollection();
     }
 
     public function getCatalogue(): ?Catalogue
@@ -245,6 +249,36 @@ class Menu extends Produit
             // set the owning side to null (unless already changed)
             if ($commandeMenu->getMenu() === $this) {
                 $commandeMenu->setMenu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailProduit>
+     */
+    public function getDetailProduits(): Collection
+    {
+        return $this->detailProduits;
+    }
+
+    public function addDetailProduit(DetailProduit $detailProduit): self
+    {
+        if (!$this->detailProduits->contains($detailProduit)) {
+            $this->detailProduits->add($detailProduit);
+            $detailProduit->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailProduit(DetailProduit $detailProduit): self
+    {
+        if ($this->detailProduits->removeElement($detailProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($detailProduit->getMenu() === $this) {
+                $detailProduit->setMenu(null);
             }
         }
 

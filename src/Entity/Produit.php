@@ -30,38 +30,38 @@ class Produit
     #[ORM\Column(type: 'integer')]
     #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","commande:write",
         "menu:write","taille:write","boisson:write","boisson:read:simple","boisson:read:all",
-        "taille:read:all","write:menu","catalogue:read"])]
+        "taille:read:all","write:menu", "catalogue"])]
     protected $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message:'le nom du burger est obligatoire')]
     #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple",
-        "boisson:read:all","boisson:read:all","write:menu","catalogue:read"])]
+        "boisson:read:all","boisson:read:all","write:menu","catalogue"])]
     protected $nom;
 
     #[ORM\Column(type: 'blob', nullable:true)]
-    #[Groups(["catalogue:read"])]
+    #[Groups(["catalogue"])]
     // #[Groups(["write","burger:read:simple","burger:read:all","menu:write","boisson:read:simple","boisson:read:all","write:menu"])]
     protected $image;
 
     #[ORM\Column(type: 'integer', nullable:true)]
     #[Assert\NotBlank(message:'le prix est obligatoire')]
     // #[Assert\Positive]
-    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","write:menu","catalogue:read"])]  
+    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","write:menu","catalogue"])]  
     protected $prix;
 
     #[ORM\Column(type: 'string', length: 255,nullable:true)]
-    #[Groups(["burger:read:all","catalogue:simple"])]
+    #[Groups(["burger:read:all"])]
     protected $etat="disponible";
 
     #[ORM\Column(type: 'text', nullable:true)]
-    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple","boisson:read:all","write:menu","catalogue:read"])]
+    #[Groups(["burger:read:simple","burger:read:all","write","menu:read:all","boisson:read:simple","boisson:read:all","write:menu","catalogue"])]
     protected $description;
 
     /**
      * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
      */
-    #[Groups(['write',"write:menu","menu:read:all","menu:read:simple"])]
+    #[Groups(['write',"write:menu","menu:read:all","menu:read:simple","catalogue"])]
     #[Assert\NotBlank(message:'le burger doit avoir une image')]
     // #[Assert\File(
     //     maxSize: '14k',

@@ -18,12 +18,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'method' => 'get',
             'path' => '/catalogues',
             'status' => Response::HTTP_OK,
-            'normalization_context' => [
-                'groups' => ['catalogue:read']
+            'normalization_context' => ['groups' => ['catalogue']
             ],
-        ]],
-        // attributes: ["pagination_items_per_page" => 5]
-
+    ]],
+    itemOperations:[
+        "get"=>[]
+    ]
 )]
 
 class Catalogue
@@ -34,80 +34,107 @@ class Catalogue
     private $id;
 
     //#[ORM\OneToMany(mappedBy: 'catalogue', targetEntity: Menu::class)]
-    #[Groups(["catalogue:read"])]
+    #[Groups(["catalogue"])]
     private $menus;
 
-    #[Groups(["catalogue:read"])]
+    #[Groups(["catalogue"])]
     private $burgers;
 
-    public function __construct()
-    {
-        $this->menus = new ArrayCollection();
-        $this->burgers = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->menus = new ArrayCollection();
+    //     $this->burgers = new ArrayCollection();
+    //     $this-> id = 0;
+        
+    // }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    // public function getId(): ?int
+    // {
+    //     return $this->id;
+    // }
 
-    /**
-     * @return Collection<int, Menu>
-     */
-    public function getMenus(): Collection
-    {
-        return $this->menus;
-    }
+    // /**
+    //  * @return Collection<int, Menu>
+    //  */
+    // public function getMenus(): Collection
+    // {
+    //     return $this->menus;
+    // }
 
-    public function addMenu(Menu $menu): self
-    {
-        if (!$this->menus->contains($menu)) {
-            $this->menus[] = $menu;
-            $menu->setCatalogue($this);
-        }
+    // public function addMenu(Menu $menu): self
+    // {
+    //     if (!$this->menus->contains($menu)) {
+    //         $this->menus[] = $menu;
+    //         $menu->setCatalogue($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeMenu(Menu $menu): self
-    {
-        if ($this->menus->removeElement($menu)) {
-            // set the owning side to null (unless already changed)
-            if ($menu->getCatalogue() === $this) {
-                $menu->setCatalogue(null);
-            }
-        }
+    // public function removeMenu(Menu $menu): self
+    // {
+    //     if ($this->menus->removeElement($menu)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($menu->getCatalogue() === $this) {
+    //             $menu->setCatalogue(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection<int, Burger>
-     */
-    public function getBurgers(): Collection
-    {
-        return $this->burgers;
-    }
+    // /**
+    //  * @return Collection<int, Burger>
+    //  */
+    // public function getBurgers(): Collection
+    // {
+    //     return $this->burgers;
+    // }
 
-    public function addBurger(Burger $burger): self
-    {
-        if (!$this->burgers->contains($burger)) {
-            $this->burgers[] = $burger;
-            $burger->setCatalogue($this);
-        }
+    // public function addBurger(Burger $burger): self
+    // {
+    //     if (!$this->burgers->contains($burger)) {
+    //         $this->burgers[] = $burger;
+    //         $burger->setCatalogue($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeBurger(Burger $burger): self
-    {
-        if ($this->burgers->removeElement($burger)) {
-            // set the owning side to null (unless already changed)
-            if ($burger->getCatalogue() === $this) {
-                $burger->setCatalogue(null);
-            }
-        }
+    // public function removeBurger(Burger $burger): self
+    // {
+    //     if ($this->burgers->removeElement($burger)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($burger->getCatalogue() === $this) {
+    //             $burger->setCatalogue(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
+
+    // /**
+    //  * Set the value of menus
+    //  *
+    //  * @return  self
+    //  */ 
+    // public function setMenus($menus)
+    // {
+    //     $this->menus = $menus;
+
+    //     return $this;
+    // }
+
+    // /**
+    //  * Set the value of burgers
+    //  *
+    //  * @return  self
+    //  */ 
+    // public function setBurgers($burgers)
+    // {
+    //     $this->burgers = $burgers;
+
+    //     return $this;
+    // }
+
 }
