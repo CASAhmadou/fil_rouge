@@ -20,7 +20,7 @@ final class MultipartDecoder implements DecoderInterface
         $request = $this->requestStack->getCurrentRequest();
         // dd($request);
         // dd($request->request->all());
-        $request->request->set("prix",floatval($request->request->all()["prix"]));
+        $request->request->set("prix",intval($request->request->all()["prix"]));
 
         if (!$request) {
             return null;
