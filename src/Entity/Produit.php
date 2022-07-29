@@ -22,7 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\DiscriminatorMap(["produit" => "Produit", "boisson" => "Boisson", "portionFrite" => "PortionFrite", "menu" => "Menu", "burger" =>"Burger" ])]
 #[ApiResource]
 
-#[Assert\Callback([ValidationPrix::class, 'validePrix'])]
+//#[Assert\Callback([ValidationPrix::class, 'validePrix'])]
 class Produit
 {
     #[ORM\Id]
